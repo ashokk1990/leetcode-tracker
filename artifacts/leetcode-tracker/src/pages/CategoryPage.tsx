@@ -7,6 +7,7 @@ import {
   ExternalLink,
   ArrowLeft,
   Zap,
+  ChevronRight,
 } from "lucide-react";
 
 function getLeetCodeSlug(title: string) {
@@ -40,7 +41,6 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen bg-[hsl(222,47%,7%)]">
-      {/* Header */}
       <header className="border-b border-[hsl(217,33%,14%)] px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center gap-4">
           <Link href="/">
@@ -80,7 +80,6 @@ export default function CategoryPage() {
             </div>
           </div>
 
-          {/* Progress bar */}
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs text-[hsl(215,20%,45%)]">
               <span>{pct}% complete</span>
@@ -105,22 +104,21 @@ export default function CategoryPage() {
             return (
               <div
                 key={q.id}
-                className={`group flex items-center gap-4 rounded-xl border px-4 py-4 transition-all duration-150 cursor-pointer ${
+                className={`group flex items-center gap-3 rounded-xl border px-4 py-3.5 transition-all duration-150 ${
                   completed
                     ? "border-[hsl(217,33%,16%)] bg-[hsl(222,47%,8%)]"
                     : "border-[hsl(217,33%,14%)] bg-[hsl(222,47%,9%)] hover:border-[hsl(217,33%,22%)]"
                 }`}
-                onClick={() => toggle(q.id)}
               >
                 {/* Number */}
                 <span className="text-[hsl(215,20%,35%)] text-xs font-mono w-5 flex-shrink-0 text-right">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
 
-                {/* Check icon */}
+                {/* Check button */}
                 <button
                   className="flex-shrink-0 transition-transform duration-150 active:scale-90"
-                  onClick={(e) => { e.stopPropagation(); toggle(q.id); }}
+                  onClick={() => toggle(q.id)}
                   aria-label={completed ? "Mark incomplete" : "Mark complete"}
                 >
                   {completed ? (
@@ -130,38 +128,48 @@ export default function CategoryPage() {
                   )}
                 </button>
 
-                {/* Title */}
-                <div className="flex-1 min-w-0">
-                  <span
-                    className={`text-sm font-medium transition-colors ${
-                      completed
-                        ? "text-[hsl(215,20%,45%)] line-through decoration-[hsl(215,20%,35%)]"
-                        : "text-white"
-                    }`}
-                  >
-                    {q.title}
-                  </span>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <Zap size={11} style={{ color: cat.color }} />
-                    <span className="text-xs text-[hsl(215,20%,45%)] font-mono">{q.pattern}</span>
+                {/* Title — clicking navigates to detail */}
+                <Link href={`/question/${q.id}`} className="flex-1 min-w-0">
+                  <div className="cursor-pointer">
+                    <span
+                      className={`text-sm font-medium transition-colors block truncate ${
+                        completed
+                          ? "text-[hsl(215,20%,45%)] line-through decoration-[hsl(215,20%,35%)]"
+                          : "text-white group-hover:text-white/90"
+                      }`}
+                    >
+                      {q.title}
+                    </span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <Zap size={10} style={{ color: cat.color }} />
+                      <span className="text-xs text-[hsl(215,20%,45%)] font-mono truncate">{q.pattern}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
 
                 {/* LeetCode # */}
                 <span className="text-[hsl(215,20%,38%)] text-xs font-mono flex-shrink-0">
                   #{q.leetcodeId}
                 </span>
 
-                {/* External link */}
+                {/* External LeetCode link */}
                 <a
                   href={`https://leetcode.com/problems/${getLeetCodeSlug(q.title)}/`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
                   className="text-[hsl(215,20%,35%)] hover:text-[hsl(224,71%,65%)] transition-colors flex-shrink-0"
+                  title="Open on LeetCode"
                 >
-                  <ExternalLink size={14} />
+                  <ExternalLink size={13} />
                 </a>
+
+                {/* Detail chevron */}
+                <Link href={`/question/${q.id}`}>
+                  <ChevronRight
+                    size={15}
+                    className="text-[hsl(215,20%,30%)] group-hover:text-[hsl(215,20%,55%)] transition-colors flex-shrink-0 cursor-pointer"
+                  />
+                </Link>
               </div>
             );
           })}
