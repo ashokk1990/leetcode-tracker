@@ -2,6 +2,8 @@ import { useRoute, Link } from "wouter";
 import { allQuestions, categories } from "@/data/questions";
 import { questionDetails } from "@/data/questionDetails";
 import { useProgress } from "@/hooks/useProgress";
+import { AlgorithmViz } from "@/components/AlgorithmViz";
+import { getVizType } from "@/data/vizMap";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -188,8 +190,13 @@ export default function QuestionDetail() {
 
         {/* Approach */}
         <Section icon={<BookOpen size={16} />} title="Approach — Step by Step" color="#22c55e">
-          <div className="text-[hsl(213,31%,80%)] text-sm leading-relaxed whitespace-pre-line font-mono bg-[hsl(222,47%,7%)] rounded-lg p-4 border border-[hsl(217,33%,16%)]">
-            {detail.approach}
+          <div className="flex flex-col sm:flex-row gap-4 sm:items-start">
+            <div className="text-[hsl(213,31%,80%)] text-sm leading-relaxed whitespace-pre-line font-mono bg-[hsl(222,47%,7%)] rounded-lg p-4 border border-[hsl(217,33%,16%)] flex-1 min-w-0">
+              {detail.approach}
+            </div>
+            <div className="sm:w-[280px] w-full flex-shrink-0">
+              <AlgorithmViz type={getVizType(question)} />
+            </div>
           </div>
         </Section>
 
