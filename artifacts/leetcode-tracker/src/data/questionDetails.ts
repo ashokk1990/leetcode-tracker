@@ -1115,6 +1115,190 @@ export const questionDetails: Record<number, QuestionDetail> = {
       "N-Queens (#51) — constrained permutations",
     ],
   },
+  // ─── Dynamic Programming ──────────────────────────────────────────────────────
+  76: {
+    id: 76,
+    concepts: ["1D DP", "Circular Array", "Problem Reduction"],
+    conceptExplanation:
+      "House Robber I is a straight line — you can't rob adjacent houses. House Robber II is a circle — the first and last houses are also adjacent. The trick: run House Robber I twice: once on houses[0..n-2] and once on houses[1..n-1]. The answer is the max of both. This way the first and last are never both included.",
+    approach:
+      "def rob(nums): dp_prev2, dp_prev = 0, 0; for n in nums: dp_prev2, dp_prev = dp_prev, max(dp_prev, dp_prev2 + n); return dp_prev.\n\n1. Return max(rob(nums[:-1]), rob(nums[1:])).\n   Base cases: if len==1 return nums[0].",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1) — only two variables",
+    relatedPatterns: [
+      "House Robber (#198) — linear version",
+      "House Robber III (#337) — on a tree (DFS + DP)",
+      "Delete and Earn (#740) — same reduce-to-robber pattern",
+    ],
+  },
+  77: {
+    id: 77,
+    concepts: ["Unbounded Knapsack", "BFS on State Space", "Bottom-up DP"],
+    conceptExplanation:
+      "You want the fewest coins to make amount. Each coin can be reused (unbounded). Think of it as: dp[i] = fewest coins to make amount i. For each amount, try every coin — if you use coin c, you need dp[i - c] more coins plus 1. Take the minimum over all valid coins.",
+    approach:
+      "1. dp = [infinity] * (amount + 1); dp[0] = 0.\n2. For i from 1 to amount:\n   For each coin c: if i >= c: dp[i] = min(dp[i], dp[i-c] + 1).\n3. Return dp[amount] if finite else -1.",
+    timeComplexity: "O(amount × n) — n = number of coins",
+    spaceComplexity: "O(amount)",
+    relatedPatterns: [
+      "Coin Change II (#518) — count ways, not minimum",
+      "Combination Sum IV (#377) — ordered combinations",
+      "Perfect Squares (#279) — same unbounded knapsack structure",
+    ],
+  },
+  78: {
+    id: 78,
+    concepts: ["0/1 Knapsack", "Boolean DP", "Subset Sum"],
+    conceptExplanation:
+      "Can we split the array into two equal-sum subsets? That means: can any subset sum to total/2? This is the classic 0/1 knapsack — each number can be used at most once. dp[j] = True if we can form sum j from elements seen so far. Iterate backwards to avoid using the same element twice.",
+    approach:
+      "1. If total is odd: return False. target = total // 2.\n2. dp = {0} (set of reachable sums).\n3. For each num: dp |= {s + num for s in dp if s + num <= target}.\n4. Return target in dp.\n\nAlternative: dp boolean array, iterate j from target down to num.",
+    timeComplexity: "O(n × target)",
+    spaceComplexity: "O(target)",
+    relatedPatterns: [
+      "Target Sum (#494) — count subsets with given sum difference",
+      "Last Stone Weight II (#1049) — same reduction",
+      "0/1 knapsack template: iterate items outer, capacity inner (backwards)",
+    ],
+  },
+  79: {
+    id: 79,
+    concepts: ["LIS — Patience Sorting", "Binary Search + DP"],
+    conceptExplanation:
+      "The O(n²) DP is intuitive: dp[i] = length of LIS ending at i. But the O(n log n) solution is elegant: maintain a 'tails' array where tails[i] is the smallest tail of all LIS of length i+1. For each number, binary search for its position in tails and replace — tails always stays sorted.",
+    approach:
+      "O(n log n) — Patience Sort:\n1. tails = [].\n2. For each num:\n   Binary search (bisect_left) for the position of num in tails.\n   If pos == len(tails): append (new longest).\n   Else: replace tails[pos] = num.\n3. Return len(tails).",
+    timeComplexity: "O(n log n) with binary search; O(n²) naive DP",
+    spaceComplexity: "O(n) — tails array",
+    relatedPatterns: [
+      "Number of Longest Increasing Subsequences (#673)",
+      "Russian Doll Envelopes (#354) — 2D LIS",
+      "Patience sorting is also used in card game optimal strategy",
+    ],
+  },
+  80: {
+    id: 80,
+    concepts: ["2D Grid DP", "Combinatorics"],
+    conceptExplanation:
+      "You can only move right or down. The number of ways to reach cell (i, j) = ways to reach (i-1, j) + ways to reach (i, j-1). It's just addition — you're counting paths. The grid fills naturally bottom-up. Mathematically it's C(m+n-2, m-1) but DP is the key pattern to learn.",
+    approach:
+      "1. dp = [[1] * n for _ in range(m)] (first row and col are all 1 — only one path).\n2. For i from 1 to m-1, j from 1 to n-1:\n   dp[i][j] = dp[i-1][j] + dp[i][j-1].\n3. Return dp[m-1][n-1].\n\nOptimize to O(n) space with a 1D array.",
+    timeComplexity: "O(m × n)",
+    spaceComplexity: "O(n) with rolling array",
+    relatedPatterns: [
+      "Unique Paths II (#63) — with obstacles",
+      "Minimum Path Sum (#64) — same grid, minimize sum",
+      "Triangle (#120) — 1D DP variant",
+    ],
+  },
+  81: {
+    id: 81,
+    concepts: ["Greedy", "1D DP", "Reach Tracking"],
+    conceptExplanation:
+      "Can you reach the last index? Track the farthest index you can currently reach. As you walk forward, update max_reach = max(max_reach, i + nums[i]). If you ever reach a position beyond max_reach before getting there, you're stuck.",
+    approach:
+      "Greedy (O(n) time, O(1) space):\n1. max_reach = 0.\n2. For i from 0 to n-1:\n   If i > max_reach: return False (can't get here).\n   max_reach = max(max_reach, i + nums[i]).\n3. Return True.",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    relatedPatterns: [
+      "Jump Game II (#45) — minimum jumps",
+      "Jump Game III (#1306) — arbitrary jumps",
+      "Reach the last stone — greedy reach pattern",
+    ],
+  },
+  82: {
+    id: 82,
+    concepts: ["Greedy BFS", "Implicit Level Traversal"],
+    conceptExplanation:
+      "Think of it as BFS levels: from the current range [l, r] you can reach, find the farthest position reachable from any index in that range. That's your next level. The number of levels = minimum jumps. It's greedy BFS — at each step, jump as far as possible.",
+    approach:
+      "1. jumps=0, current_end=0, farthest=0.\n2. For i from 0 to n-2:\n   farthest = max(farthest, i + nums[i]).\n   If i == current_end: jumps++; current_end = farthest.\n3. Return jumps.",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    relatedPatterns: [
+      "Jump Game (#55) — boolean version",
+      "Video Stitching (#1024) — interval covering same pattern",
+      "BFS level-count problems",
+    ],
+  },
+  83: {
+    id: 83,
+    concepts: ["String DP", "BFS on String Index", "Trie Extension"],
+    conceptExplanation:
+      "Can the string be segmented into dictionary words? dp[i] = True means s[0..i-1] can be segmented. For each position i, check all substrings ending at i: if dp[j] is True and s[j..i] is in the dictionary, dp[i] = True. Start with dp[0] = True (empty string).",
+    approach:
+      "1. word_set = set(wordDict). dp = [False] * (n+1); dp[0] = True.\n2. For i from 1 to n:\n   For j from 0 to i:\n     If dp[j] and s[j:i] in word_set: dp[i] = True; break.\n3. Return dp[n].",
+    timeComplexity: "O(n³) naive — O(n²) with max word length bound",
+    spaceComplexity: "O(n)",
+    relatedPatterns: [
+      "Word Break II (#140) — return all segmentations",
+      "Concatenated Words (#472) — multi-word version",
+      "BFS approach: queue of indices, expand by valid words",
+    ],
+  },
+  84: {
+    id: 84,
+    concepts: ["2D String DP", "LCS", "Sequence Alignment"],
+    conceptExplanation:
+      "LCS asks: what's the longest sequence of characters that appears in both strings in order (not necessarily consecutive)? dp[i][j] = LCS of text1[0..i-1] and text2[0..j-1]. If characters match: dp[i][j] = dp[i-1][j-1] + 1. If not: dp[i][j] = max(dp[i-1][j], dp[i][j-1]).",
+    approach:
+      "1. dp = [[0] * (n+1) for _ in range(m+1)].\n2. For i in range(1, m+1), j in range(1, n+1):\n   If text1[i-1] == text2[j-1]: dp[i][j] = dp[i-1][j-1] + 1.\n   Else: dp[i][j] = max(dp[i-1][j], dp[i][j-1]).\n3. Return dp[m][n].",
+    timeComplexity: "O(m × n)",
+    spaceComplexity: "O(m × n) — optimizable to O(min(m,n))",
+    relatedPatterns: [
+      "Edit Distance (#72) — LCS extended with insert/delete/replace",
+      "Shortest Common Supersequence (#1092)",
+      "Delete Operation for Two Strings (#583)",
+      "Diff tools (git diff) use LCS internally",
+    ],
+  },
+  85: {
+    id: 85,
+    concepts: ["2D Grid DP", "Path Optimization"],
+    conceptExplanation:
+      "Same grid structure as Unique Paths, but instead of counting paths, minimize the sum. dp[i][j] = minimum cost path from (0,0) to (i,j). At each cell, you came from above or from the left — take whichever was cheaper.",
+    approach:
+      "1. Modify grid in-place (or use separate dp).\n2. Fill first row and column with running sums (only one direction possible).\n3. For i,j from 1: dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]).\n4. Return dp[m-1][n-1].",
+    timeComplexity: "O(m × n)",
+    spaceComplexity: "O(1) if modifying input, else O(m × n)",
+    relatedPatterns: [
+      "Unique Paths (#62) — count paths",
+      "Dungeon Game (#174) — backwards DP",
+      "Cherry Pickup (#741) — two simultaneous path DP",
+    ],
+  },
+  86: {
+    id: 86,
+    concepts: ["DP — Min & Max Tracking", "Subarray Product"],
+    conceptExplanation:
+      "Unlike sum, negative × negative = positive (a very negative number could become very positive after another negative). So you must track both the current minimum AND maximum product ending at each index. When you see a negative number, swap min and max.",
+    approach:
+      "1. max_prod = min_prod = result = nums[0].\n2. For num in nums[1:]:\n   candidates = (num, max_prod * num, min_prod * num).\n   max_prod = max(candidates).\n   min_prod = min(candidates).\n   result = max(result, max_prod).\n3. Return result.",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    relatedPatterns: [
+      "Maximum Subarray (#53) — Kadane's Algorithm (sum version)",
+      "Maximum Product of Three Numbers (#628)",
+      "Subarray Product Less Than K (#713)",
+    ],
+  },
+  87: {
+    id: 87,
+    concepts: ["State Machine DP", "Stock Trading with Cooldown"],
+    conceptExplanation:
+      "Model the problem as 3 states: HELD (holding stock), SOLD (just sold, in cooldown), REST (resting, can buy). Transitions: HELD → sell → SOLD; SOLD → cooldown → REST; REST or REST → buy → HELD. At each day, update all three states. The answer is max(SOLD, REST) at the end.",
+    approach:
+      "1. held = -infinity (can't hold without buying), sold = 0, rest = 0.\n2. For each price:\n   prev_held = held\n   held = max(held, rest - price)   # keep holding OR buy from rest\n   sold = prev_held + price          # sell today\n   rest = max(rest, sold)            # stay resting OR come out of cooldown\n3. Return max(sold, rest).",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    relatedPatterns: [
+      "Best Time to Buy and Sell Stock II (#122) — no cooldown",
+      "Best Time to Buy and Sell Stock with Transaction Fee (#714)",
+      "State machine DP: model as FSM, one variable per state",
+    ],
+  },
+
+  // ─── Backtracking (kept at end for historical ordering) ───────────────────────
   75: {
     id: 75,
     concepts: ["DFS + Backtracking", "Grid Traversal", "Character Matching"],

@@ -92,7 +92,7 @@ export default function RoadmapPage() {
           LeetCode Mastery
         </span>
         <span className="ml-auto text-xs text-[hsl(215,20%,40%)] font-mono">
-          Python · Medium · 75 questions
+          Python · Medium · 87 questions
         </span>
       </header>
 
@@ -114,7 +114,7 @@ export default function RoadmapPage() {
                 / {totalQuestions}
               </span>
             </p>
-            <p className="text-[hsl(215,20%,50%)] text-xs mt-1">questions completed across 5 milestones</p>
+            <p className="text-[hsl(215,20%,50%)] text-xs mt-1">questions completed across 6 milestones</p>
           </div>
           {highestCompletedMilestone && (
             <div className="ml-auto flex flex-col items-end gap-1">
@@ -289,10 +289,10 @@ export default function RoadmapPage() {
         <div className="rounded-xl border border-[hsl(217,33%,16%)] bg-[hsl(222,47%,9%)] p-4 flex items-start gap-3">
           <Sparkles size={16} className="text-[hsl(224,71%,60%)] mt-0.5 flex-shrink-0" />
           <div>
-            <p className="text-white text-xs font-semibold mb-1">After completing all 5 milestones</p>
+            <p className="text-white text-xs font-semibold mb-1">After completing all 6 milestones</p>
             <p className="text-[hsl(215,20%,50%)] text-xs leading-relaxed">
               Dynamic Programming is your natural next step — every DP problem
-              is built on the recursive thinking you master in milestones 3–5.
+              is built on the recursive thinking you master in milestones 3–6.
               System Design becomes your focus for senior-level targeting.
             </p>
           </div>

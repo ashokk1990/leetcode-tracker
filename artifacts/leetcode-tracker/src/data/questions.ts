@@ -202,6 +202,27 @@ export const categories: Category[] = [
       { id: 75, title: "Word Search", difficulty: "Medium", leetcodeId: 79, pattern: "DFS + Backtracking on Grid", category: "backtracking" },
     ],
   },
+  {
+    id: "dp",
+    label: "Dynamic Programming",
+    color: "#0ea5e9",
+    accent: "rgba(14,165,233,0.15)",
+    description: "Break problems into overlapping subproblems — memoize, tabulate, optimize",
+    questions: [
+      { id: 76, title: "House Robber II", difficulty: "Medium", leetcodeId: 213, pattern: "1D DP — Circular Array", category: "dp" },
+      { id: 77, title: "Coin Change", difficulty: "Medium", leetcodeId: 322, pattern: "Unbounded Knapsack / BFS", category: "dp" },
+      { id: 78, title: "Partition Equal Subset Sum", difficulty: "Medium", leetcodeId: 416, pattern: "0/1 Knapsack", category: "dp" },
+      { id: 79, title: "Longest Increasing Subsequence", difficulty: "Medium", leetcodeId: 300, pattern: "LIS — DP + Binary Search", category: "dp" },
+      { id: 80, title: "Unique Paths", difficulty: "Medium", leetcodeId: 62, pattern: "2D Grid DP", category: "dp" },
+      { id: 81, title: "Jump Game", difficulty: "Medium", leetcodeId: 55, pattern: "Greedy / 1D DP", category: "dp" },
+      { id: 82, title: "Jump Game II", difficulty: "Medium", leetcodeId: 45, pattern: "Greedy BFS (Implicit)", category: "dp" },
+      { id: 83, title: "Word Break", difficulty: "Medium", leetcodeId: 139, pattern: "String DP / BFS", category: "dp" },
+      { id: 84, title: "Longest Common Subsequence", difficulty: "Medium", leetcodeId: 1143, pattern: "2D String DP", category: "dp" },
+      { id: 85, title: "Minimum Path Sum", difficulty: "Medium", leetcodeId: 64, pattern: "2D Grid DP", category: "dp" },
+      { id: 86, title: "Maximum Product Subarray", difficulty: "Medium", leetcodeId: 152, pattern: "DP — Track Min & Max", category: "dp" },
+      { id: 87, title: "Best Time to Buy and Sell Stock with Cooldown", difficulty: "Medium", leetcodeId: 309, pattern: "State Machine DP", category: "dp" },
+    ],
+  },
 ];
 
 export const allQuestions: Question[] = categories.flatMap((c) => c.questions);

@@ -222,6 +222,51 @@ export const milestones: Milestone[] = [
       },
     ],
   },
+  {
+    id: "m6",
+    level: 6,
+    title: "Dynamic Programming",
+    subtitle: "1D/2D DP, Knapsack, LIS, LCS & State Machines",
+    tagline: "Turn exponential recursion into polynomial elegance",
+    color: "#0ea5e9",
+    gradient: "from-sky-500/20 to-sky-600/5",
+    categoryIds: ["dp"],
+    questionCount: 12,
+    conceptsMastered: [
+      "1D DP — linear & circular (House Robber pattern)",
+      "Unbounded knapsack (Coin Change)",
+      "0/1 knapsack (Subset sum problems)",
+      "LIS with patience sorting O(n log n)",
+      "2D grid DP (paths, min cost)",
+      "2D string DP — LCS, edit distance family",
+      "Greedy-as-DP (Jump Game I & II)",
+      "State machine DP (buy/sell/cooldown)",
+      "String segmentation DP (Word Break)",
+      "DP with min & max tracking simultaneously",
+    ],
+    unlocksNext:
+      "DP completes the core algorithm toolkit. From here, Hard-level interview questions become approachable — most are DP extensions, graph + DP hybrids, or multi-dimensional knapsack variants. System Design is now the main remaining frontier for senior levelling.",
+    companySignals: [
+      {
+        tier: "FAANG — All Levels",
+        companies: ["Google", "Meta", "Amazon", "Apple", "Microsoft", "Netflix"],
+        confidence: "elite",
+        note: "DP is the most-tested advanced topic across all FAANG loops. Completing this milestone puts you above the bar for the vast majority of interview questions at any level.",
+      },
+      {
+        tier: "Quant & Finance Tech",
+        companies: ["Jane Street", "Two Sigma", "Citadel", "Optiver", "DE Shaw"],
+        confidence: "strong",
+        note: "Quant firms heavily test DP and combinatorics. This milestone combined with milestone 4 (graphs) makes you very competitive here.",
+      },
+      {
+        tier: "Top AI / Research Labs",
+        companies: ["OpenAI", "Anthropic", "DeepMind", "Waymo", "Scale AI"],
+        confidence: "strong",
+        note: "Research-adjacent engineering roles at AI labs expect deep algorithmic fluency. A complete roadmap demonstrates exactly that.",
+      },
+    ],
+  },
 ];
 
 export const confidenceConfig = {
